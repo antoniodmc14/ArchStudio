@@ -190,6 +190,7 @@ function renderPage(projects, about) {
       width: 100%;
       max-width: 100%;
       margin-top: 3rem;
+      overflow: visible;
     }
 
     #grid-column {
@@ -239,8 +240,7 @@ function renderPage(projects, about) {
       box-sizing: border-box;
     }
 
-    #about-column,
-    #about-column *,
+    #about-column > *,
     #about-section,
     #about-section * {
       overflow: hidden !important;
@@ -368,7 +368,7 @@ function renderPage(projects, about) {
 <!-- ==================================================================== -->
 <!-- SECTION: PROJECT GRID                                               -->
 <!-- ==================================================================== -->
-<div id="desktop-split" class="w-full max-w-full overflow-x-hidden">
+<div id="desktop-split" class="w-full max-w-full">
 <div id="grid-column" class="min-w-0">
 <div id="grid-section" class="view-panel pb-16 pt-12">
 <div id="grid-audio-toggle-wrap" class="mx-4 mb-4 sm:mx-6">
