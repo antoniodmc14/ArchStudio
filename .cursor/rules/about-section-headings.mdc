@@ -1,0 +1,31 @@
+---
+description: Locked About section headings and header icons (user-defined)
+globs: src/data/about.js,src/templates/render.js,index.html
+alwaysApply: true
+---
+
+# About section metadata (locked — do not change without explicit user request)
+
+## Headings (exact, this order)
+
+1. `Projects`
+2. `Clients`
+3. `Collaborators`
+4. `Awards`
+
+## Header icons (exact — user set manually)
+
+| Section       | `assets/icons/` file |
+|---------------|----------------------|
+| Projects      | `work.svg`           |
+| Clients       | `feliz.svg`          |
+| Collaborators | `circulo.svg`        |
+| Awards        | `estrella.svg`       |
+
+Source of truth: `groups[].icon` in `src/data/about.js` must match the table. `npm run build:html` fails if icons or titles drift.
+
+## Never do this
+
+- Do **not** swap About header icons to `cuadro`, `arco`, or other defaults.
+- Do **not** change About header `<img src="assets/icons/…">` paths or regenerate About group markup unless the user asks.
+- Do **only** what the user asks in each task; preserve all other hand-edited markup.
