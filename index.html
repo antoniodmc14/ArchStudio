@@ -8,6 +8,10 @@
 <link rel="stylesheet" href="dist/css/main.css" />
 <style>
   /* Desktop split (≥1024px). Mobile + tablet unchanged — no build required. */
+  .about-column-heading {
+    display: none;
+  }
+
   @media (min-width: 1024px) {
     #header-nav-default {
       display: none !important;
@@ -186,7 +190,7 @@
       height: 10px;
     }
 
-    #about-column #about-section > div.flex-1 img.mt-\[3px\] {
+    #about-column #about-section > div.flex-1 img.mt-[3px] {
       margin-top: 2px;
     }
 
@@ -203,9 +207,6 @@
     #grid-section footer[aria-label="Site footer"] {
       position: static;
     }
-  }
-  .about-column-heading {
-    display: none;
   }
 </style>
 </head>
