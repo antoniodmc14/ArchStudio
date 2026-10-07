@@ -30,6 +30,7 @@ function initAboutView() {
   const navAbout = document.getElementById("nav-about");
   const navGrid = document.getElementById("nav-grid");
   const aboutCloseTriggers = document.querySelectorAll(".about-close-trigger");
+  const gridCopyright = document.getElementById("grid-column-copyright");
   const desktopQuery = window.matchMedia("(min-width: 1024px)");
 
   if (!gridSection || !aboutSection) return;
@@ -57,11 +58,18 @@ function initAboutView() {
     }
   };
 
+  const setGridCopyrightVisible = (shown) => {
+    if (!gridCopyright) return;
+    gridCopyright.classList.toggle("is-hidden", !shown);
+    gridCopyright.setAttribute("aria-hidden", String(!shown));
+  };
+
   const showBothDesktop = () => {
     gridSection.classList.remove("is-hidden");
     aboutSection.classList.remove("is-hidden");
     gridSection.setAttribute("aria-hidden", "false");
     aboutSection.setAttribute("aria-hidden", "false");
+    setGridCopyrightVisible(true);
   };
 
   const showGrid = () => {
@@ -69,7 +77,7 @@ function initAboutView() {
       showBothDesktop();
       setNavActive(false);
       history.replaceState(null, "", "#grid-section");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      document.getElementById("grid-column")?.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -77,6 +85,7 @@ function initAboutView() {
     aboutSection.classList.add("is-hidden");
     gridSection.setAttribute("aria-hidden", "false");
     aboutSection.setAttribute("aria-hidden", "true");
+    setGridCopyrightVisible(true);
     setNavActive(false);
     history.replaceState(null, "", "#grid-section");
   };
@@ -86,7 +95,7 @@ function initAboutView() {
       showBothDesktop();
       setNavActive(true);
       history.replaceState(null, "", "#about-section");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      document.querySelector("#about-section > div.flex-1")?.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
@@ -94,6 +103,7 @@ function initAboutView() {
     gridSection.classList.add("is-hidden");
     aboutSection.setAttribute("aria-hidden", "false");
     gridSection.setAttribute("aria-hidden", "true");
+    setGridCopyrightVisible(false);
     setNavActive(true);
     history.replaceState(null, "", "#about-section");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -377,6 +387,7 @@ function initImageViewer() {
   }
 
   let isOpen = false;
+  let returnFocusTo = null;
   let currentIndex = 0;
   let displayedCounterIndex = null;
   let scrollEndTimer = 0;
@@ -565,8 +576,12 @@ function initImageViewer() {
         "image-viewer-zoom-frame flex max-h-[80vh] max-w-[90vw] items-center justify-center overflow-hidden";
 
       const image = document.createElement("img");
+      const width = sourceImage.naturalWidth || Number(sourceImage.getAttribute("width"));
+      const height = sourceImage.naturalHeight || Number(sourceImage.getAttribute("height"));
       image.src = sourceImage.currentSrc || sourceImage.src;
       image.alt = sourceImage.alt || "";
+      if (width) image.width = width;
+      if (height) image.height = height;
       image.className =
         "lightbox-image max-h-[80vh] max-w-[90vw] cursor-zoom-in select-none object-contain will-change-transform";
       image.draggable = false;
@@ -602,10 +617,13 @@ function initImageViewer() {
     const galleryImages = Array.from(gallery.querySelectorAll("img"));
     currentIndex = galleryImages.indexOf(image);
     if (currentIndex < 0) currentIndex = 0;
+    returnFocusTo = image;
 
     buildSlides(galleryImages);
     viewer.classList.add("is-open");
     viewer.setAttribute("aria-hidden", "false");
+    document.getElementById("desktop-split")?.setAttribute("inert", "");
+    document.getElementById("site-header")?.setAttribute("inert", "");
     document.body.classList.add("overflow-hidden");
     isOpen = true;
 
@@ -617,8 +635,12 @@ function initImageViewer() {
 
   const closeViewer = () => {
     if (!isOpen) return;
+    const trigger = returnFocusTo;
+    returnFocusTo = null;
     viewer.classList.remove("is-open");
     viewer.setAttribute("aria-hidden", "true");
+    document.getElementById("desktop-split")?.removeAttribute("inert");
+    document.getElementById("site-header")?.removeAttribute("inert");
     document.body.classList.remove("overflow-hidden");
     window.clearTimeout(scrollEndTimer);
     scrollEndTimer = 0;
@@ -632,6 +654,35 @@ function initImageViewer() {
     displayedCounterIndex = null;
     isOpen = false;
     counterEl.textContent = "";
+    if (trigger instanceof HTMLElement) trigger.focus();
+  };
+
+  const lightboxFocusables = () =>
+    [closeButton, prevButton, nextButton].filter(
+      (el) => !el.hasAttribute("disabled"),
+    );
+
+  const trapLightboxFocus = (event) => {
+    if (event.key !== "Tab") return;
+    const focusables = lightboxFocusables();
+    if (!focusables.length) {
+      event.preventDefault();
+      return;
+    }
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+    if (event.shiftKey) {
+      if (active === first || !viewer.contains(active)) {
+        event.preventDefault();
+        last.focus();
+      }
+      return;
+    }
+    if (active === last || !viewer.contains(active)) {
+      event.preventDefault();
+      first.focus();
+    }
   };
 
   const isViewerControl = (target) =>
@@ -651,11 +702,24 @@ function initImageViewer() {
 
   /* --- Lightbox event listeners (within initImageViewer) --- */
 
+  const openFromThumbnail = (image) => {
+    if (!image) return;
+    openViewer(image);
+  };
+
   gridSection.addEventListener("click", (event) => {
     const image = event.target.closest(".project-gallery img");
     if (!image) return;
     event.preventDefault();
-    openViewer(image);
+    openFromThumbnail(image);
+  });
+
+  gridSection.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const image = event.target.closest(".project-gallery img");
+    if (!image) return;
+    event.preventDefault();
+    openFromThumbnail(image);
   });
 
   closeButton.addEventListener("click", (event) => {
@@ -747,7 +811,10 @@ function initImageViewer() {
     if (event.key === "ArrowRight") {
       event.preventDefault();
       stepGallery(1);
+      return;
     }
+
+    trapLightboxFocus(event);
   });
 }
 
@@ -842,6 +909,14 @@ function initDesktopGalleryDrag() {
    06. EVENT LISTENERS & INIT
    ========================================================================== */
 
+function initSocialButtons() {
+  document.querySelectorAll("#about-section .social-button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+    });
+  });
+}
+
 function initAmbientAudioToggle() {
   const audio = document.getElementById("bg-audio");
   const audioToggle = document.getElementById("audio-toggle");
@@ -857,23 +932,25 @@ function initAmbientAudioToggle() {
         .play()
         .then(() => {
           audioToggle.textContent = "Sound (on)";
+          audioToggle.setAttribute("aria-pressed", "true");
         })
         .catch((err) => console.error("Audio playback error:", err));
     } else {
       audio.pause();
       audioToggle.textContent = "Sound (off)";
+      audioToggle.setAttribute("aria-pressed", "false");
     }
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   initAmbientAudioToggle();
-  initProjectInfoToggle("daniel-info-toggle", "daniel-info-panel");
-  initProjectInfoToggle("piaule-info-toggle", "piaule-info-panel");
-  initProjectInfoToggle("holzrausch-info-toggle", "holzrausch-info-panel");
-  initProjectInfoToggle("relicario-info-toggle", "relicario-info-panel");
-  initProjectInfoToggle("papayas-info-toggle", "papayas-info-panel");
-  initProjectInfoToggle("forest-edge-info-toggle", "forest-edge-info-panel");
+  initSocialButtons();
+  document.querySelectorAll("#grid-section button[aria-controls]").forEach((toggle) => {
+    const panelId = toggle.getAttribute("aria-controls");
+    if (!toggle.id || !panelId) return;
+    initProjectInfoToggle(toggle.id, panelId);
+  });
   initAboutView();
   initImageViewer();
   initDesktopGalleryDrag();
