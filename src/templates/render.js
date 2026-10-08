@@ -60,7 +60,7 @@ function renderGallery(project, isFirstProject = false, isLastProject = false) {
 
 function renderProject(project, isFirstProject = false, isLastProject = false) {
   const id = escapeHtml(project.id);
-  const title = `<div class="flex items-start justify-between gap-4"><div><h2 id="project-${id}-title" class="m-0 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#121212] lg:text-[12px] lg:leading-[1.3]">${escapeHtml(project.title)}</h2><p class="m-0 mt-1 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#121212] lg:text-[12px] lg:leading-[1.3]">${escapeHtml(project.meta)}</p></div><button type="button" id="${id}-info-toggle" class="shrink-0 cursor-pointer border-0 bg-transparent p-0 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#FB9836] transition-opacity hover:opacity-70 lg:text-[12px] lg:leading-[1.3]" aria-expanded="false" aria-controls="${id}-info-panel">(info)</button></div>`;
+  const title = `<div class="flex items-start justify-between gap-4"><div><h2 id="project-${id}-title" class="notranslate m-0 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#121212] lg:text-[12px] lg:leading-[1.3]" translate="no">${escapeHtml(project.title)}</h2><p class="notranslate m-0 mt-1 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#121212] lg:text-[12px] lg:leading-[1.3]" translate="no">${escapeHtml(project.meta)}</p></div><button type="button" id="${id}-info-toggle" class="notranslate shrink-0 cursor-pointer border-0 bg-transparent p-0 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#FB9836] transition-opacity hover:opacity-70 lg:text-[12px] lg:leading-[1.3]" translate="no" aria-expanded="false" aria-controls="${id}-info-panel">(info)</button></div>`;
   const info = renderInfoPanel(project);
   const icons = renderProjectIcons(project);
 
@@ -86,7 +86,7 @@ function renderAboutGroup(group, isLast = false) {
   const padBottom = isLast
     ? " pb-6 lg:pb-0 min-[1600px]:pb-0"
     : " lg:pb-0.5 min-[1600px]:pb-[clamp(0.125rem,0.35vh,0.375rem)]";
-  return `<div class="mt-6 grid grid-cols-[125px_1fr] items-start gap-x-2 border-t border-[#DADADA] pt-4 md:grid-cols-2 lg:mt-0 lg:grid-cols-[minmax(9rem,max-content)_minmax(0,1fr)] lg:gap-x-1.5 lg:gap-y-1 lg:pt-3 min-[1600px]:gap-x-2 min-[1600px]:gap-y-[clamp(0.25rem,0.5vh,0.5rem)] min-[1600px]:pt-[clamp(0.875rem,0.85vh,1.25rem)] min-[1920px]:pt-[clamp(1rem,1vh,1.5rem)]${padBottom}"><div class="flex min-w-0 items-center gap-1.5 font-normal"><img src="assets/icons/${escapeHtml(group.icon)}.svg" alt="" width="12" height="12" class="${ABOUT_ICON_SIZE} shrink-0 [image-rendering:pixelated]" /><span class="min-w-0">${escapeHtml(group.title)}</span></div><ul class="m-0 min-w-0 list-none p-0">${group.items.map(renderAboutListItem).join("")}</ul></div>`;
+  return `<div class="notranslate mt-6 grid grid-cols-[125px_1fr] items-start gap-x-2 border-t border-[#DADADA] pt-4 md:grid-cols-2 lg:mt-0 lg:grid-cols-[minmax(9rem,max-content)_minmax(0,1fr)] lg:gap-x-1.5 lg:gap-y-1 lg:pt-3 min-[1600px]:gap-x-2 min-[1600px]:gap-y-[clamp(0.25rem,0.5vh,0.5rem)] min-[1600px]:pt-[clamp(0.875rem,0.85vh,1.25rem)] min-[1920px]:pt-[clamp(1rem,1vh,1.5rem)]${padBottom}" translate="no"><div class="flex min-w-0 items-center gap-1.5 font-normal"><img src="assets/icons/${escapeHtml(group.icon)}.svg" alt="" width="12" height="12" class="${ABOUT_ICON_SIZE} shrink-0 [image-rendering:pixelated]" /><span class="min-w-0">${escapeHtml(group.title)}</span></div><ul class="m-0 min-w-0 list-none p-0">${group.items.map(renderAboutListItem).join("")}</ul></div>`;
 }
 
 function renderCloseButton() {
@@ -97,14 +97,14 @@ function renderGridColumnCopyright(about) {
   return `<!-- ==================================================================== -->
 <!-- SECTION: GRID COLUMN COPYRIGHT                                      -->
 <!-- ==================================================================== -->
-<div id="grid-column-copyright" class="${COLUMN_COPYRIGHT_CLASSES} view-panel lg:mt-auto min-[1600px]:pb-[clamp(0.25rem,0.5vh,0.5rem)] min-[1600px]:pt-[clamp(0.375rem,0.75vh,0.75rem)]" role="contentinfo" aria-label="Copyright"><p class="m-0">${escapeHtml(about.copyright)}</p></div>`;
+<div id="grid-column-copyright" class="${COLUMN_COPYRIGHT_CLASSES} notranslate view-panel lg:mt-auto min-[1600px]:pb-[clamp(0.25rem,0.5vh,0.5rem)] min-[1600px]:pt-[clamp(0.375rem,0.75vh,0.75rem)]" translate="no" role="contentinfo" aria-label="Copyright"><p class="m-0">${escapeHtml(about.copyright)}</p></div>`;
 }
 
 function renderAbout(about) {
   return `<!-- ==================================================================== -->
 <!-- SECTION: ABOUT VIEW                                                 -->
 <!-- ==================================================================== -->
-<section id="about-section" class="about-copy view-panel view-panel--about is-hidden flex min-h-dvh flex-col pt-12 font-mono text-[12px] font-light leading-[1.35] text-[#121212] lg:h-auto lg:max-h-full lg:min-h-0 lg:flex-1 lg:pt-1.5 lg:text-[10px] min-[1600px]:pt-[clamp(0.25rem,0.5vh,0.5rem)] min-[1600px]:text-[12px] min-[1600px]:leading-[1.45] min-[1920px]:leading-[1.5]" aria-labelledby="about-intro" aria-hidden="true">
+<section id="about-section" class="about-copy view-panel view-panel--about is-hidden flex min-h-dvh flex-col pt-12 font-mono text-[12px] font-light leading-[1.35] text-[#121212] lg:h-auto lg:max-h-full lg:min-h-0 lg:flex-1 lg:pt-3 lg:text-[10px] min-[1600px]:pt-[clamp(0.5rem,1vh,1rem)] min-[1600px]:text-[12px] min-[1600px]:leading-[1.45] min-[1920px]:leading-[1.5]" aria-labelledby="about-intro" aria-hidden="true">
 <div class="no-scrollbar mx-4 min-h-0 flex-1 pt-8 sm:mx-6 lg:flex lg:flex-col lg:gap-3 lg:overflow-x-hidden lg:overflow-y-auto lg:pt-0.5 min-[1600px]:gap-[clamp(0.875rem,1.2vh,1.25rem)] min-[1600px]:pt-[clamp(0.125rem,0.35vh,0.375rem)] min-[1920px]:gap-[clamp(1rem,1.4vh,1.5rem)]">
 <p id="about-intro" class="m-0 max-w-prose md:max-w-[78ch] lg:max-w-none">${escapeHtml(about.intro)}</p>
 <div class="mt-6 max-w-prose lg:max-w-none">
@@ -120,7 +120,7 @@ ${about.groups
   .map((group, index) => renderAboutGroup(group, index === about.groups.length - 1))
   .join("\n")}
 </div>
-<div class="${COLUMN_COPYRIGHT_CLASSES} justify-between lg:mt-auto min-[1600px]:pb-[clamp(0.25rem,0.5vh,0.5rem)] min-[1600px]:pt-[clamp(0.375rem,0.75vh,0.75rem)]">
+<div class="${COLUMN_COPYRIGHT_CLASSES} notranslate justify-between lg:mt-auto min-[1600px]:pb-[clamp(0.25rem,0.5vh,0.5rem)] min-[1600px]:pt-[clamp(0.375rem,0.75vh,0.75rem)]" translate="no">
 <p class="m-0">${escapeHtml(about.aboutColumnFooter)}</p>
 ${renderCloseButton()}
 </div>
@@ -163,12 +163,12 @@ function renderPage(projects, about) {
 <header id="site-header" class="fixed top-0 left-0 right-0 z-20 shrink-0 bg-white font-light text-[14px] leading-tight tracking-[0.01em] text-[#121212] lg:static">
 <div class="mx-4 flex items-center justify-between border-b border-[#DADADA] py-2.5 sm:mx-6">
 <div class="min-w-0">
-<h1 id="header-title-default" class="m-0 text-[12px] font-light leading-[1.3] tracking-[0.01em]"><a href="/" class="text-[#121212] no-underline transition-opacity hover:opacity-70">Dante Beltrán Studio</a></h1>
+<h1 id="header-title-default" class="m-0 text-[12px] font-light leading-[1.3] tracking-[0.01em]"><a href="/" class="notranslate text-[#121212] no-underline transition-opacity hover:opacity-70" translate="no">Dante Beltrán Studio</a></h1>
 </div>
 <nav id="header-nav-default" class="shrink-0 lg:hidden" aria-label="Main Navigation">
 <ul class="m-0 flex list-none items-center gap-6 p-0 sm:gap-8">
-<li><a href="#grid-section" id="nav-grid" class="nav-view-link text-[#FB9836] no-underline transition-opacity hover:opacity-70">Grid</a></li>
-<li><a href="#about-section" id="nav-about" class="nav-view-link text-[#121212] no-underline transition-opacity hover:opacity-70">About</a></li>
+<li><a href="#grid-section" id="nav-grid" class="nav-view-link notranslate text-[#FB9836] no-underline transition-opacity hover:opacity-70" translate="no">Grid</a></li>
+<li><a href="#about-section" id="nav-about" class="nav-view-link notranslate text-[#121212] no-underline transition-opacity hover:opacity-70" translate="no">About</a></li>
 </ul>
 </nav>
 </div>

@@ -55,10 +55,10 @@ module.exports = {
       title: "Awards",
       icon: "estrella",
       items: [
-        "COAG Architecture Award, Residential Category",
-        "FAD Awards Finalist, Interior Architecture",
+        "COAG Architecture Award",
+        "FAD Awards Finalist",
         "ArchDaily Building of the Year Nominee",
-        "Architectural Review Emerging Architecture Award, Commendation",
+        "Architectural Review Emerging Architecture",
       ],
     },
   ],
