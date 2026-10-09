@@ -65,7 +65,7 @@
   }
 
   .project-gallery__fade {
-    @apply pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-12 bg-gradient-to-l from-white via-white/80 to-transparent;
+    @apply pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-[80px] bg-gradient-to-l from-white/85 via-white/25 to-transparent;
   }
 
   .project-info-panel {

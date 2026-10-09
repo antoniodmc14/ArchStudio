@@ -67,7 +67,8 @@ function renderProject(project, isFirstProject = false, isLastProject = false) {
   return `<article id="${id}" class="min-w-0 max-w-full" aria-labelledby="project-${id}-title">
 <div class="mx-4 mt-8 min-w-0 max-w-full sm:mx-6">
 ${title}
-${project.iconsBeforeInfo ? `${icons}\n${info}` : `${info}\n${icons}`}
+${icons}
+${info}
 ${renderGallery(project, isFirstProject, isLastProject)}
 </div>
 </article>`;
@@ -111,8 +112,10 @@ function renderAbout(about) {
 <a href="mailto:${escapeHtml(about.email)}" class="block text-[#121212] no-underline transition-opacity hover:opacity-70">${escapeHtml(about.email)}</a>
 ${about.socialLabels
   .map(
-    (label) =>
-      `<button type="button" class="social-button block border-0 bg-transparent p-0 text-left font-mono font-light text-[#121212] transition-opacity hover:opacity-70">${escapeHtml(label)}</button>`,
+    (label) => {
+      const protect = label.toLowerCase() === "are.na";
+      return `<button type="button" class="social-button${protect ? " notranslate" : ""} block border-0 bg-transparent p-0 text-left font-mono font-light text-[#121212] transition-opacity hover:opacity-70"${protect ? ' translate="no"' : ""}>${escapeHtml(label)}</button>`;
+    },
   )
   .join("\n")}
 </div>
@@ -134,11 +137,11 @@ function renderImageViewer() {
 <!-- SECTION: LIGHTBOX MODAL (full-screen image viewer)                  -->
 <!-- ==================================================================== -->
 <div id="image-viewer" class="image-viewer fixed bottom-0 left-0 right-0 top-0 z-50 flex h-full w-full flex-col bg-white/95 font-mono backdrop-blur-sm transition-opacity duration-300 ease-out" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
-<button type="button" id="image-viewer-close" class="fixed right-4 top-4 z-50 border-0 bg-transparent p-0 text-[14px] font-light leading-[1.2] tracking-[0.01em] text-[#FB9836] transition-opacity hover:opacity-70" aria-label="Close image viewer">(x)</button>
+<button type="button" id="image-viewer-close" class="notranslate fixed right-4 top-4 z-50 border-0 bg-transparent p-0 text-[14px] font-light leading-[1.2] tracking-[0.01em] text-[#FB9836] transition-opacity hover:opacity-70" translate="no" aria-label="Close image viewer">(x)</button>
 <button type="button" id="image-viewer-prev" class="font-pixel fixed left-4 top-1/2 z-50 -translate-y-1/2 border-0 bg-transparent p-2 text-[24px] leading-none text-[#121212] transition-opacity hover:opacity-70 sm:text-[32px]" aria-label="Previous image">&lt;</button>
 <button type="button" id="image-viewer-next" class="font-pixel fixed right-4 top-1/2 z-50 -translate-y-1/2 border-0 bg-transparent p-2 text-[24px] leading-none text-[#121212] transition-opacity hover:opacity-70 sm:text-[32px]" aria-label="Next image">&gt;</button>
-<p id="image-viewer-counter" class="pointer-events-auto fixed bottom-6 left-1/2 z-50 m-0 -translate-x-1/2 font-mono text-[12px] font-light leading-[1.35] text-[#121212]" aria-live="polite"></p>
-<div id="image-viewer-stage" class="relative z-10 h-full w-full min-h-0 flex-1">
+<p id="image-viewer-counter" class="pointer-events-auto fixed bottom-12 left-1/2 z-50 m-0 -translate-x-1/2 font-mono text-[12px] font-light leading-[1.35] text-[#121212] md:bottom-6" aria-live="polite"></p>
+<div id="image-viewer-stage" class="relative z-10 h-full w-full min-h-0 flex-1 px-12 md:px-0">
 <div id="image-viewer-track" class="flex h-full w-full snap-x snap-mandatory scroll-smooth overflow-x-auto no-scrollbar"></div>
 </div>
 </div>`;
@@ -180,7 +183,7 @@ function renderPage(projects, about) {
 <div id="grid-column" class="min-w-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:min-h-0 lg:max-w-full lg:overflow-x-hidden lg:overflow-y-auto">
 <div id="grid-section" class="view-panel min-w-0 max-w-full pb-16 pt-12 lg:pt-6">
 <div id="grid-audio-toggle-wrap" class="mx-4 mb-4 sm:mx-6 lg:m-0 lg:h-0 lg:min-h-0 lg:overflow-visible lg:border-0 lg:p-0">
-<button id="audio-toggle" type="button" class="cursor-pointer border-0 bg-transparent p-0 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#121212] transition-opacity hover:opacity-70 lg:fixed lg:right-4 lg:top-2.5 lg:z-[25] lg:text-[12px] lg:leading-[1.3]" aria-pressed="false">Sound (off)</button>
+<button id="audio-toggle" type="button" class="notranslate cursor-pointer border-0 bg-transparent p-0 font-light text-[14px] leading-[1.2] tracking-[0.01em] text-[#121212] transition-opacity hover:opacity-70 lg:fixed lg:right-4 lg:top-2.5 lg:z-[25] lg:text-[12px] lg:leading-[1.3]" translate="no" aria-pressed="false">Sound (off)</button>
 </div>
 ${projects.map((project, index) => renderProject(project, index === 0, index === projects.length - 1)).join("\n")}
 </div>

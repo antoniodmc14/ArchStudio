@@ -569,11 +569,11 @@ function initImageViewer() {
     const createSlide = (sourceImage) => {
       const slide = document.createElement("div");
       slide.className =
-        "image-viewer-slide flex h-full min-w-full snap-center items-center justify-center p-4";
+        "image-viewer-slide flex h-full min-w-full snap-center items-center justify-center py-4 md:p-4";
 
       const frame = document.createElement("div");
       frame.className =
-        "image-viewer-zoom-frame flex max-h-[80vh] max-w-[90vw] items-center justify-center overflow-hidden";
+        "image-viewer-zoom-frame flex h-auto w-auto max-h-[75vh] max-w-full items-center justify-center overflow-hidden md:max-h-[80vh] md:max-w-[90vw]";
 
       const image = document.createElement("img");
       const width = sourceImage.naturalWidth || Number(sourceImage.getAttribute("width"));
@@ -583,7 +583,7 @@ function initImageViewer() {
       if (width) image.width = width;
       if (height) image.height = height;
       image.className =
-        "lightbox-image max-h-[80vh] max-w-[90vw] cursor-zoom-in select-none object-contain will-change-transform";
+        "lightbox-image h-auto w-auto max-h-[75vh] max-w-full cursor-zoom-in select-none object-contain will-change-transform md:max-h-[80vh] md:max-w-[90vw]";
       image.draggable = false;
 
       zoomControllers.push(

@@ -7,6 +7,10 @@
 const iconSets = {
   a: ["luna", "casa", "cafe", "corazon", "circulo", "flechas", "flor", "sol"],
   b: ["hoja", "arco", "bird", "trebol", "reloj", "estrella", "meteoro", "paz"],
+  c: ["timon", "lunamora", "sol", "mirilla", "flor", "casa", "rayo", "arco"],
+  d: ["corona", "corazon", "reloj", "rombo", "cosa", "salud", "yinyan", "estrella"],
+  e: ["pengu", "japo", "cafe", "play", "tero", "flechas", "rayo", "rombo"],
+  f: ["hoja", "tero", "bird", "lunamora", "paz", "corona", "mirilla", "sol"],
 };
 
 /* --- Project records (order preserved for DOM / build output) --- */
@@ -17,7 +21,6 @@ const projects = [
     title: "La Jolla Beachside",
     meta: "2025/26 San Diego, USA",
     iconSet: "a",
-    iconsBeforeInfo: true,
     fadeAfterScroll: true,
     description: [
       "The central challenge of this La Jolla beachside residence lay in transforming a rigid 1950s coastal footprint into a reauthored architectural environment. Bound by strict Coastal Commission regulations, the project operates less as a renovation and more as a rigorous recalibration of space, structure, and light.",
@@ -60,7 +63,7 @@ const projects = [
     id: "holzrausch",
     title: "Casa da Praia",
     meta: "2025/26 Alcúdia, Spain",
-    iconSet: "a",
+    iconSet: "c",
     description: [
       "Perched along the Alcúdia coastline, Casa da Praia transforms an original 1980s structure into a refined holiday retreat. Designed by Munich-based studio Holzrausch, the project merges Mediterranean materiality with mid-century California geometry and Latin American modernist references.",
       "The intervention preserves the original two-level layout and pine beams while introducing teak millwork, custom HUGUET terrazzo, and targeted color fields inspired by Luis Barragán. A central false ceiling was opened to funnel natural light deep into the core, establishing a continuous dialogue between interior volumes and the sea.",
@@ -81,7 +84,7 @@ const projects = [
     id: "relicario",
     title: "Apartamento Relicário",
     meta: "2025/26 Brasília, Brazil",
-    iconSet: "b",
+    iconSet: "d",
     description: [
       "Located in Brasília, Apartamento Relicário reimagines a 1,022-square-foot residential layout into a multi-generational home for an elderly resident. Designed by Hersen Mendes Arquitetura, the intervention opens fluid sightlines between living and dining areas while integrating subtle, non-clinical accessibility solutions.",
       "A lifetime of travel souvenirs, photographs, and personal artifacts are framed within custom joinery, treating domestic history as an architectural element. Soft indirect lighting, wide circulation paths, and tactile timber finishes prioritize autonomy, warmth, and visual clarity.",
@@ -102,7 +105,7 @@ const projects = [
     id: "papayas",
     title: "SBC Apartment",
     meta: "2025/26 São Paulo, Brazil",
-    iconSet: "a",
+    iconSet: "e",
     description: [
       "Located in São Paulo, SBC Apartment reimagines a 538-square-foot duplex into a fluid, highly integrated living environment. Designed by Studio Papaya, the project uses saturated green tones, exposed plywood joinery, and strategic floor material shifts to delineate functional zones without erect interior walls.",
       "A custom sliding table transforms the main plane between culinary worktop, dining area, and workspace. Absorbing the former balcony into the double-height volume maximizes natural light, while custom millwork and a suspended mezzanine wardrobe optimize spatial efficiency.",
@@ -125,7 +128,7 @@ const projects = [
     id: "forest-edge",
     title: "Forest Edge House",
     meta: "2025/26 Sierra de las Nieves, Spain",
-    iconSet: "b",
+    iconSet: "f",
     description: [
       "Located in the foothills of the Sierra de las Nieves in Málaga, Forest Edge House is a 1,500-square-foot off-grid residence designed by Marc Thorpe (Edifice Upstate). Sited along a gentle forested slope, the dark pine-clad volume integrates a facade-integrated solar array generating 38 kWh daily, anchoring the project around strict energy self-reliance and descriptive functionalism.",
       "The architecture draws inspiration from regional agrarian structures, where form directly follows necessity. Windows are strategically positioned for cross-ventilation and framed views of the Mediterranean canopy, while a 25-foot cantilevered black steel deck extends directly into the surrounding trees.",
